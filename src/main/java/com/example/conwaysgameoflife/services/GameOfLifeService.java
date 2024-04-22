@@ -1,8 +1,6 @@
 package com.example.conwaysgameoflife.services;
 
-import com.example.conwaysgameoflife.configuration.Configurations;
-
-public class GameOfLiveService {
+public class GameOfLifeService {
 
     public static int[][] Play(int[][] previousState){
         int rows = previousState.length;
