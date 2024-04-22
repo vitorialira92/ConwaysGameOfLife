@@ -14,6 +14,7 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -130,6 +131,7 @@ public class GamePage extends Application {
                 "Generations per minute",
                 Configurations.MIN_GENERATIONS_PER_MINUTE, Configurations.MAX_GENERATIONS_PER_MINUTE);
         generationsPerMinuteChangeButton = StandardComponents.getButton("APPLY");
+        generationsPerMinuteChangeButton.setOnAction(this::generationsPerMinuteChangeButtonOnClick);
 
         newButton = StandardComponents.getButton("START OVER");
         newButton.setOnAction(this::startOverButtonOnClick);
@@ -161,6 +163,28 @@ public class GamePage extends Application {
         loadUIUpdate();
     }
 
+    private void generationsPerMinuteChangeButtonOnClick(ActionEvent actionEvent) {
+
+        int min = Configurations.MIN_GENERATIONS_PER_MINUTE;
+        int max = Configurations.MAX_GENERATIONS_PER_MINUTE;
+
+        int generationsPerMinute = 0;
+
+        for (javafx.scene.Node child : generationsPerMinuteTextField.getChildren()) {
+            if (child instanceof TextField textField) {
+                if(!textField.getText().isEmpty()){
+                    int value = Integer.parseInt(textField.getText());
+                    value = Math.max(min, value);
+                    generationsPerMinute = Math.min(max, value);
+                }
+            }
+        }
+        if(generationsPerMinute != 0)
+            this.timeToReloadGame = (double) 60000 / generationsPerMinute;
+
+        startTimeToReloadGameTimeline();
+    }
+
     private void startOverButtonOnClick(ActionEvent actionEvent) {
         ((Stage) title.getScene().getWindow()).close();
         stopTimelines();
@@ -175,15 +199,7 @@ public class GamePage extends Application {
 
     private void loadUIUpdate() {
         //grid
-        Duration duration = Duration.millis(timeToReloadGame);
-
-        KeyFrame keyFrame = new KeyFrame(duration, event -> LoadGameGrid());
-
-        gridTimeline = new Timeline(keyFrame);
-        gridTimeline.setCycleCount(Timeline.INDEFINITE);
-
-        gridTimeline.play();
-
+        startTimeToReloadGameTimeline();
         //time counter
 
         KeyFrame clockKeyFrame =
@@ -211,6 +227,21 @@ public class GamePage extends Application {
         generationsAndLiveAndDeadTimeline.setCycleCount(Timeline.INDEFINITE);
         generationsAndLiveAndDeadTimeline.play();
 
+    }
+
+    private void startTimeToReloadGameTimeline() {
+        if (gridTimeline != null) {
+            gridTimeline.stop();
+        }
+
+        Duration duration = Duration.millis(timeToReloadGame);
+
+        KeyFrame keyFrame = new KeyFrame(duration, event -> LoadGameGrid());
+
+        gridTimeline = new Timeline(keyFrame);
+        gridTimeline.setCycleCount(Timeline.INDEFINITE);
+
+        gridTimeline.play();
     }
 
     private void LoadGameGrid(){
