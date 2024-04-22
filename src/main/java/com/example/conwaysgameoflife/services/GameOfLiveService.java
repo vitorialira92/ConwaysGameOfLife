@@ -41,14 +41,13 @@ public class GameOfLiveService {
             if(i < rows && i >= 0){
                 for(int j = column - 1; j < column + 2; j ++){
                     if(j < columns && j >= 0 && !(i == row && j == column)){
-                        if(states[i][j] == 1)
-                            count ++;
+                        count += states[i][j];
                     }
                 }
             }
         }
 
-        return count;
+        return (count - states[row][column]);
     }
 
 }
