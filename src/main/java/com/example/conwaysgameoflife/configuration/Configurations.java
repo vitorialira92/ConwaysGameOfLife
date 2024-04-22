@@ -13,6 +13,6 @@ public class Configurations {
     public static final int MAX_INITIAL_LIVE_CELLS = 50;
     public static final int MIN_INITIAL_LIVE_CELLS = 10;
 
-    public static final int MAX_GENERATIONS_PER_MINUTE = 15;
-    public static final int MIN_GENERATIONS_PER_MINUTE = 450;
+    public static final int MAX_GENERATIONS_PER_MINUTE = 450;
+    public static final int MIN_GENERATIONS_PER_MINUTE = 15;
 }
