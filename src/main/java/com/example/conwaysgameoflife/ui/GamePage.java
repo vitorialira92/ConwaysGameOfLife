@@ -6,6 +6,7 @@ import com.example.conwaysgameoflife.ui.components.StandardComponents;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
+import javafx.event.ActionEvent;
 import javafx.geometry.HorizontalDirection;
 import javafx.geometry.Point2D;
 import javafx.geometry.Pos;
@@ -95,6 +96,7 @@ public class GamePage extends Application {
                 }
 
                 gameGrid.add(rect, j, i);
+                //gameGrid.add(rect, i, j);
             }
         }
     }
@@ -127,6 +129,8 @@ public class GamePage extends Application {
         generationsPerMinuteChangeButton = StandardComponents.getButton("APPLY");
 
         newButton = StandardComponents.getButton("START OVER");
+        newButton.setOnAction(this::startOverButtonOnClick);
+
         VBox leftColumn = new VBox(20, title, gridSize, liveAndDeadCounter,
                 StandardComponents.getDivider(), oldSubtitle, newSubtitle, StandardComponents.getDivider(),
                 generationsPerMinuteTextField, generationsPerMinuteChangeButton,
@@ -152,6 +156,18 @@ public class GamePage extends Application {
         stage.show();
 
         loadUIUpdate();
+    }
+
+    private void startOverButtonOnClick(ActionEvent actionEvent) {
+        ((Stage) title.getScene().getWindow()).close();
+
+        ConfigurationPage configurationPage = new ConfigurationPage();
+        Stage stage = new Stage();
+        try {
+            configurationPage.start(stage);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void loadUIUpdate() {
@@ -220,7 +236,8 @@ public class GamePage extends Application {
                 Integer colIndex = GridPane.getColumnIndex(node);
                 Integer rowIndex = GridPane.getRowIndex(node);
 
-                if (colIndex != null && rowIndex != null) {
+                if (colIndex != null && rowIndex != null
+                        && colIndex < Configurations.columns && rowIndex < Configurations.rows) {
                     if (newState[rowIndex][colIndex] == 0) {
                         rect.setFill(Color.WHITE);
                     } else if(state[rowIndex][colIndex] == 0){
