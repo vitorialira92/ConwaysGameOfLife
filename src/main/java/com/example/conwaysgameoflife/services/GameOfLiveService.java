@@ -40,7 +40,7 @@ public class GameOfLiveService {
         for(int i = row - 1; i < row + 2; i ++){
             if(i < rows && i >= 0){
                 for(int j = column - 1; j < column + 2; j ++){
-                    if(j < columns && j >= 0 && !(i == row && j == column)){
+                    if(j < columns && j >= 0){
                         count += states[i][j];
                     }
                 }
