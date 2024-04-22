@@ -49,6 +49,9 @@ public class GamePage extends Application {
 
     private static int totalCells;
     private static int liveCells;
+    private Timeline gridTimeline;
+    private Timeline clockTimeline;
+    private Timeline generationsAndLiveAndDeadTimeline;
 
     public GamePage(int initialLivingCells){
         gameGrid = new GridPane();
@@ -160,7 +163,7 @@ public class GamePage extends Application {
 
     private void startOverButtonOnClick(ActionEvent actionEvent) {
         ((Stage) title.getScene().getWindow()).close();
-
+        stopTimelines();
         ConfigurationPage configurationPage = new ConfigurationPage();
         Stage stage = new Stage();
         try {
@@ -176,10 +179,10 @@ public class GamePage extends Application {
 
         KeyFrame keyFrame = new KeyFrame(duration, event -> LoadGameGrid());
 
-        Timeline timeline = new Timeline(keyFrame);
-        timeline.setCycleCount(Timeline.INDEFINITE);
+        gridTimeline = new Timeline(keyFrame);
+        gridTimeline.setCycleCount(Timeline.INDEFINITE);
 
-        timeline.play();
+        gridTimeline.play();
 
         //time counter
 
@@ -191,32 +194,23 @@ public class GamePage extends Application {
 
         });
 
-        Timeline clockTimeline = new Timeline(clockKeyFrame);
+        clockTimeline = new Timeline(clockKeyFrame);
         clockTimeline.setCycleCount(Timeline.INDEFINITE);
         clockTimeline.play();
 
-        //generations
+        //generations and Live and Dead
 
-        KeyFrame generationsKeyFrame =
+        KeyFrame generationsAndLiveAndDeadKeyFrame =
                 new KeyFrame(Duration.millis(1), e -> {
                     generationsCounter.setText(" | " + generations + " generations");
-                });
-
-        Timeline generationsTimeline = new Timeline(generationsKeyFrame);
-        generationsTimeline.setCycleCount(Timeline.INDEFINITE);
-        generationsTimeline.play();
-
-        //live and dead
-
-        KeyFrame liveAndDeadKeyFrame =
-                new KeyFrame(Duration.millis(1), e -> {
                     liveAndDeadCounter.setText(totalCells + " total cells\n" +
                             "----> " + liveCells + " live | " + (totalCells - liveCells) + " dead");
                 });
 
-        Timeline liveAndDeadTimeline = new Timeline(liveAndDeadKeyFrame);
-        liveAndDeadTimeline.setCycleCount(Timeline.INDEFINITE);
-        liveAndDeadTimeline.play();
+        generationsAndLiveAndDeadTimeline = new Timeline(generationsAndLiveAndDeadKeyFrame);
+        generationsAndLiveAndDeadTimeline.setCycleCount(Timeline.INDEFINITE);
+        generationsAndLiveAndDeadTimeline.play();
+
     }
 
     private void LoadGameGrid(){
@@ -255,6 +249,17 @@ public class GamePage extends Application {
         liveCells = count;
 
         this.state = newState;
+    }
+    private void stopTimelines() {
+        if (gridTimeline != null) {
+            gridTimeline.stop();
+        }
+        if (clockTimeline != null) {
+            clockTimeline.stop();
+        }
+        if (generationsAndLiveAndDeadTimeline != null) {
+            generationsAndLiveAndDeadTimeline.stop();
+        }
     }
 }
 
