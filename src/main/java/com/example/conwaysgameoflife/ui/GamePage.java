@@ -1,7 +1,7 @@
 package com.example.conwaysgameoflife.ui;
 
 import com.example.conwaysgameoflife.configuration.Configurations;
-import com.example.conwaysgameoflife.services.GameOfLiveService;
+import com.example.conwaysgameoflife.services.GameOfLifeService;
 import com.example.conwaysgameoflife.ui.components.StandardComponents;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -244,7 +244,7 @@ public class GamePage extends Application {
     }
 
     private void LoadGameGrid(){
-        int[][] newState = GameOfLiveService.Play(this.state);
+        int[][] newState = GameOfLifeService.Play(this.state);
         updateGridWithNewState(newState);
     }
 
