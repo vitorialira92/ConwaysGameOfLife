@@ -13,6 +13,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import java.util.Random;
+
 public class ConfigurationPage extends Application {
 
     private static Label titleLabel;
@@ -90,12 +92,12 @@ public class ConfigurationPage extends Application {
                 }
             }
         }
-
+        boolean getRandomLivingCells = false;
         for (javafx.scene.Node child : livingCellsTextField.getChildren()) {
             if (child instanceof TextField textField) {
 
                 if(textField.getText().isEmpty())
-                    initialLiveCells = Configurations.MAX_INITIAL_LIVE_CELLS;
+                    getRandomLivingCells = true;
                 else{
                     int value = Integer.parseInt(textField.getText());
                     initialLiveCells = Math.max(value, Configurations.MIN_INITIAL_LIVE_CELLS);
@@ -106,7 +108,12 @@ public class ConfigurationPage extends Application {
         Configurations.rows = Math.min(row, Configurations.MAX_ROWS);
         Configurations.columns = Math.min(column, Configurations.MAX_COLUMNS);
 
+        if(getRandomLivingCells)
+            initialLiveCells = new Random().nextInt(5, Configurations.rows * Configurations.columns);
+
+
         ((Stage) titleLabel.getScene().getWindow()).close();
+
 
         GamePage gamePage = new GamePage(Math.min(initialLiveCells, Configurations.MAX_INITIAL_LIVE_CELLS));
         Stage stage = new Stage();

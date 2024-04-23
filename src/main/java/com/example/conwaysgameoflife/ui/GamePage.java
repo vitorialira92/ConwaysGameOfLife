@@ -66,8 +66,6 @@ public class GamePage extends Application {
         int rows = Configurations.rows;
         int columns = Configurations.columns;
 
-        initialLivingCells = new Random().nextInt(5, rows*columns);
-
         double w = (double) 780 / columns;
         double h = (double) 560 / rows;
 
