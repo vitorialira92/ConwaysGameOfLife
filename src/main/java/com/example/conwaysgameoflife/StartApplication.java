@@ -14,7 +14,7 @@ import java.io.IOException;
 
 public class StartApplication extends Application {
     @Override
-    public void start(Stage stage) throws IOException {
+    public void start(Stage stage) {
         VBox layout = new VBox(10, StandardComponents.getTitle("Conway's Game Of Life"));
         layout.setAlignment(Pos.CENTER);
         layout.setStyle("-fx-background-color: #151515; -fx-padding: 20;");
