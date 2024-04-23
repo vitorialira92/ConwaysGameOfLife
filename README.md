@@ -3,8 +3,7 @@
 
 ![Java](https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white)
 
-NOTE: This project is a programming challenge given by the company where I am doing an internship. It consists in building the Conway'a Game of Life in Java. 
-
+NOTE: This project is part of a programming challenge set by the company where I am currently interning. The task is to develop Conway’s Game of Life using Java.
 
 ## Table of Contents
 
@@ -25,32 +24,31 @@ In the game, there are 4 rules:
 
 ## How This Game Works
 
-This game was developed with JavaFX, so there's an interface the user can interact with. The first page, after the logo page, is the configuration one, where the cuser can choose: how many columns, how many rows and how many initial live cells there will be.
+This game was developed using JavaFX, which provides an interactive user interface. Following the logo page, the first page is the configuration page, where the user can choose the number of columns, the number of rows, and the number of initial live cells.
 
-The numbers the user choose must obey the MIN and MAX pre-defined. 
+The numbers the user chooses must adhere to predefined MIN and MAX limits.
 
-----> For the initial live cells, if the user don't type any number, the application will get a random number from MIN to ROWS * COLUMNS.
+For the initial live cells, if the user does not enter a number, the application will randomly select a number between the MIN and ROWS*COLUMNS.
 
 ![image](https://github.com/vitorialira92/ConwaysGameOfLife/assets/48605624/1a75b6ab-a733-4ae3-9e49-b122c363a9bc)
 
-Once the user press START, the initial live cells will be placed in random positions in the grid.
-Initially, every living cell will be green but once new generations are generated, living cells might be represented as yellow too.
-When in the previous state a certain cell was already alive, its color will be yellow, if not, its color will be green.
+Once the user presses START, the initial live cells will be placed randomly on the grid. Initially, every living cell will be green, but as new generations are generated, living cells may also be represented in yellow. If a cell was alive in the previous state, its color will be yellow; if not, it will be green.
 
--> Users can also choose how many generations the game should have per minute.
+Users can also choose how many generations the game should produce per minute.
+
 
 ![image](https://github.com/vitorialira92/ConwaysGameOfLife/assets/48605624/20b39d2b-3172-4699-81b9-0a27c6fefd44)
 
 
 ## Game Code Logic
 
-The game logic is entirely inside a service class called GameOfLifeService.
+The game logic is encapsulated within a service class called GameOfLifeService.
 
-The grid is a integer two-dimensional array that can be 0 (dead) or 1 (alive). To generate a new generation, each cells in the current grid is analised to each rule:
+The grid is represented by a two-dimensional integer array, where 0 indicates a dead cell and 1 indicates a live cell. To generate a new generation, each cell in the current grid is analyzed according to specific rules:
 
 ![image](https://github.com/vitorialira92/ConwaysGameOfLife/assets/48605624/fec3b285-dd3b-49a2-9fb8-cb1c2a29d3df)
 
-And to count how many alive neighbours a certain cell has, there is a method called CountLiveNeighbours:
+To count how many alive neighbours a certain cell has, there is a method called CountLiveNeighbours:
 
 ![image](https://github.com/vitorialira92/ConwaysGameOfLife/assets/48605624/9253a7ed-f564-4bf7-ad70-79dff09898b1)
 
