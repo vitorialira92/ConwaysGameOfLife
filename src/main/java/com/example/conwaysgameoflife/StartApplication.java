@@ -20,6 +20,7 @@ public class StartApplication extends Application {
         layout.setStyle("-fx-background-color: #151515; -fx-padding: 20;");
 
         Scene scene = new Scene(layout, 1440, 700);
+
         stage.setTitle("Game of Life");
         stage.setScene(scene);
         stage.show();

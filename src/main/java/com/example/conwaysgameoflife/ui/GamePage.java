@@ -36,19 +36,16 @@ public class GamePage extends Application {
     private int[][] state;
     private static GridPane gameGrid;
     private static Label title;
-    private static Label gridSize;
     private static Label liveAndDeadCounter;
     private static Label timeCounter;
     private static Label generationsCounter;
-    private static Button newButton;
-    private static Button generationsPerMinuteChangeButton;
     private static VBox generationsPerMinuteTextField;
 
-    private static int generations;
-    private static Instant begin;
+    private int generations;
+    private Instant begin;
 
-    private static int totalCells;
-    private static int liveCells;
+    private final int totalCells;
+    private int liveCells;
     private Timeline gridTimeline;
     private Timeline clockTimeline;
     private Timeline generationsAndLiveAndDeadTimeline;
@@ -58,11 +55,11 @@ public class GamePage extends Application {
         timeToReloadGame = (double) 60000 / Configurations.generationsPerMinute;
         totalCells = Configurations.rows * Configurations.columns;
         liveCells = initialLivingCells;
-        LoadInitialGameGrid(initialLivingCells);
+        loadInitialGameGrid(initialLivingCells);
         generations = 1;
     }
 
-    private void LoadInitialGameGrid(int initialLivingCells) {
+    private void loadInitialGameGrid(int initialLivingCells) {
         int rows = Configurations.rows;
         int columns = Configurations.columns;
 
@@ -85,7 +82,6 @@ public class GamePage extends Application {
 
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
-
                 Rectangle rect = new Rectangle(w, h);
 
                 rect.setStroke(Color.BLACK);
@@ -97,7 +93,6 @@ public class GamePage extends Application {
                 }
 
                 gameGrid.add(rect, j, i);
-                //gameGrid.add(rect, i, j);
             }
         }
     }
@@ -109,9 +104,8 @@ public class GamePage extends Application {
     }
 
     private void loadScreen(Stage stage) {
-
         title = StandardComponents.getLabel("Conway's Game of Life");
-        gridSize = StandardComponents.getLabel(Configurations.rows +
+        Label gridSize = StandardComponents.getLabel(Configurations.rows +
                 " rows x " + Configurations.columns + " columns");
         liveAndDeadCounter = StandardComponents.getLabel( totalCells + " total cells\n" +
                 "----> " + liveCells + " live | " + (totalCells - liveCells) + " dead");
@@ -127,16 +121,16 @@ public class GamePage extends Application {
         generationsPerMinuteTextField = StandardComponents.getOnlyNumbersTextField(
                 "Generations per minute",
                 Configurations.MIN_GENERATIONS_PER_MINUTE, Configurations.MAX_GENERATIONS_PER_MINUTE);
-        generationsPerMinuteChangeButton = StandardComponents.getButton("APPLY");
+        Button generationsPerMinuteChangeButton = StandardComponents.getButton("APPLY");
         generationsPerMinuteChangeButton.setOnAction(this::generationsPerMinuteChangeButtonOnClick);
 
-        newButton = StandardComponents.getButton("START OVER");
-        newButton.setOnAction(this::startOverButtonOnClick);
+        Button startOverButton = StandardComponents.getButton("START OVER");
+        startOverButton.setOnAction(this::startOverButtonOnClick);
 
         VBox leftColumn = new VBox(20, title, gridSize, liveAndDeadCounter,
                 StandardComponents.getDivider(), oldSubtitle, newSubtitle, StandardComponents.getDivider(),
                 generationsPerMinuteTextField, generationsPerMinuteChangeButton,
-                StandardComponents.getDivider(), newButton);
+                StandardComponents.getDivider(), startOverButton);
         leftColumn.setAlignment(Pos.CENTER);
 
         HBox timeAndGenerationsHBox = new HBox(0, timeCounter, generationsCounter);
@@ -149,9 +143,6 @@ public class GamePage extends Application {
         layout.setAlignment(Pos.CENTER);
         layout.setStyle("-fx-background-color: #151515; -fx-padding: 20;");
 
-        Line vLine = new Line(150, 0, 150, 100); // x de início, y de início, x de fim, y de fim
-        vLine.setStrokeWidth(2);
-
         Scene scene = new Scene(layout, 1440, 700);
         stage.setTitle("Game of Life");
         stage.setScene(scene);
@@ -161,7 +152,6 @@ public class GamePage extends Application {
     }
 
     private void generationsPerMinuteChangeButtonOnClick(ActionEvent actionEvent) {
-
         int min = Configurations.MIN_GENERATIONS_PER_MINUTE;
         int max = Configurations.MAX_GENERATIONS_PER_MINUTE;
 
@@ -176,6 +166,7 @@ public class GamePage extends Application {
                 }
             }
         }
+
         if(generationsPerMinute != 0)
             this.timeToReloadGame = (double) 60000 / generationsPerMinute;
 
@@ -184,7 +175,9 @@ public class GamePage extends Application {
 
     private void startOverButtonOnClick(ActionEvent actionEvent) {
         ((Stage) title.getScene().getWindow()).close();
+
         stopTimelines();
+
         ConfigurationPage configurationPage = new ConfigurationPage();
         Stage stage = new Stage();
         try {
@@ -233,7 +226,7 @@ public class GamePage extends Application {
 
         Duration duration = Duration.millis(timeToReloadGame);
 
-        KeyFrame keyFrame = new KeyFrame(duration, event -> LoadGameGrid());
+        KeyFrame keyFrame = new KeyFrame(duration, event -> loadGameGrid());
 
         gridTimeline = new Timeline(keyFrame);
         gridTimeline.setCycleCount(Timeline.INDEFINITE);
@@ -241,28 +234,25 @@ public class GamePage extends Application {
         gridTimeline.play();
     }
 
-    private void LoadGameGrid(){
-        int[][] newState = GameOfLifeService.Play(this.state);
+    private void loadGameGrid(){
+        int[][] newState = GameOfLifeService.play(this.state);
         updateGridWithNewState(newState);
     }
 
     private void updateGridWithNewState(int[][] newState) {
-
         generations++;
         int count = 0;
 
         for (Node node : gameGrid.getChildren()) {
-            if (node instanceof Rectangle) {
-                Rectangle rect = (Rectangle) node;
-
+            if (node instanceof Rectangle rect) {
                 Integer colIndex = GridPane.getColumnIndex(node);
                 Integer rowIndex = GridPane.getRowIndex(node);
 
                 if (colIndex != null && rowIndex != null
                         && colIndex < Configurations.columns && rowIndex < Configurations.rows) {
-                    if (newState[rowIndex][colIndex] == 0) {
+                    if (newState[rowIndex][colIndex] == 0)
                         rect.setFill(Color.WHITE);
-                    } else if(state[rowIndex][colIndex] == 0){
+                    else if(state[rowIndex][colIndex] == 0){
                         count ++;
                         rect.setFill(Color.GREEN);
                     }
@@ -270,7 +260,6 @@ public class GamePage extends Application {
                         count ++;
                         rect.setFill(Color.YELLOW);
                     }
-
                 }
             }
         }
@@ -278,16 +267,16 @@ public class GamePage extends Application {
 
         this.state = newState;
     }
+
     private void stopTimelines() {
-        if (gridTimeline != null) {
+        if (gridTimeline != null)
             gridTimeline.stop();
-        }
-        if (clockTimeline != null) {
+
+        if (clockTimeline != null)
             clockTimeline.stop();
-        }
-        if (generationsAndLiveAndDeadTimeline != null) {
+
+        if (generationsAndLiveAndDeadTimeline != null)
             generationsAndLiveAndDeadTimeline.stop();
-        }
     }
 }
 

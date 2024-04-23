@@ -32,16 +32,15 @@ public class StandardComponents {
 
         TextField tf = (TextField)vbox.getChildren().get(1);
         tf.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue.matches("\\d*")) {
+            if (!newValue.matches("\\d*"))
                 tf.setText(newValue.replaceAll("[^\\d]", ""));
-            }
+
 
             if (!tf.getText().isEmpty()) {
                 try {
                     int value = Integer.parseInt(tf.getText());
-                    if (value < 0) {
-                        tf.setText(String.valueOf(min));
-                    }
+                    if (value < 0)
+                        tf.setText("");
                 } catch (NumberFormatException e) {
                     tf.clear();
                 }
@@ -52,7 +51,6 @@ public class StandardComponents {
     }
 
     public static VBox getTextField(String text){
-
         Label label = new Label(text);
         label.setStyle("-fx-font-size: 24px; -fx-text-fill: white;");
 
@@ -89,17 +87,15 @@ public class StandardComponents {
         Line line = new Line(0, 0, 300, 0);
         line.setStrokeWidth(2);
         line.setStroke(Color.WHITE);
+
         return line;
     }
 
     public static Rectangle getSmallRectangle(Paint color){
         Rectangle r = new Rectangle(30, 30);
-
         r.setStroke(Color.BLACK);
         r.setFill(color);
 
         return r;
     }
-
-
 }

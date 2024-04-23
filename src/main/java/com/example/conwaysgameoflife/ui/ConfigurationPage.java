@@ -23,7 +23,6 @@ public class ConfigurationPage extends Application {
     private static VBox livingCellsTextField;
     private static Button startButton;
     private static VBox layout;
-    private static Scene scene;
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -50,18 +49,17 @@ public class ConfigurationPage extends Application {
                     Configurations.MAX_ROWS);
         columnsTextField = StandardComponents.getOnlyNumbersTextField(
                 "Columns (min: " +Configurations.MIN_COLUMNS + ", max: " +Configurations.MAX_COLUMNS + ")",
-                Configurations.MIN_COLUMNS,
-                Configurations.MAX_COLUMNS);
+                    Configurations.MIN_COLUMNS,
+                    Configurations.MAX_COLUMNS);
         livingCellsTextField = StandardComponents.getOnlyNumbersTextField(
                 "Living cells (min: " +Configurations.MIN_INITIAL_LIVE_CELLS + ", max: "
-                        +Configurations.MAX_INITIAL_LIVE_CELLS + ")",
-                Configurations.MIN_ROWS,
-                Configurations.MAX_INITIAL_LIVE_CELLS);
+                        + Configurations.MAX_INITIAL_LIVE_CELLS + ")",
+                        Configurations.MIN_ROWS,
+                        Configurations.MAX_INITIAL_LIVE_CELLS);
         livingCellsTextField.setMaxWidth(300);
 
         HBox sizes = new HBox(64, rowsTextField, columnsTextField);
         sizes.setAlignment(Pos.CENTER);
-
 
         layout = new VBox(64, titleLabel, sizes, livingCellsTextField, startButton);
         layout.setAlignment(Pos.CENTER);
@@ -70,6 +68,7 @@ public class ConfigurationPage extends Application {
 
     private void startButtonClick(ActionEvent actionEvent) {
         int row = 0, column = 0, initialLiveCells = 0;
+
         for (javafx.scene.Node child : rowsTextField.getChildren()) {
             if (child instanceof TextField textField) {
                 if(textField.getText().isEmpty())
@@ -83,7 +82,6 @@ public class ConfigurationPage extends Application {
 
         for (javafx.scene.Node child : columnsTextField.getChildren()) {
             if (child instanceof TextField textField) {
-
                 if(textField.getText().isEmpty())
                     column = Configurations.MIN_COLUMNS;
                 else{
@@ -92,10 +90,11 @@ public class ConfigurationPage extends Application {
                 }
             }
         }
+
         boolean getRandomLivingCells = false;
+
         for (javafx.scene.Node child : livingCellsTextField.getChildren()) {
             if (child instanceof TextField textField) {
-
                 if(textField.getText().isEmpty())
                     getRandomLivingCells = true;
                 else{
@@ -109,11 +108,11 @@ public class ConfigurationPage extends Application {
         Configurations.columns = Math.min(column, Configurations.MAX_COLUMNS);
 
         if(getRandomLivingCells)
-            initialLiveCells = new Random().nextInt(5, Configurations.rows * Configurations.columns);
-
+            initialLiveCells = new Random()
+                    .nextInt(Configurations.MIN_INITIAL_LIVE_CELLS,
+                            Configurations.rows * Configurations.columns);
 
         ((Stage) titleLabel.getScene().getWindow()).close();
-
 
         GamePage gamePage = new GamePage(Math.min(initialLiveCells, Configurations.MAX_INITIAL_LIVE_CELLS));
         Stage stage = new Stage();
