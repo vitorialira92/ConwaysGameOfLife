@@ -10,8 +10,8 @@ public class Configurations {
     public static final int MIN_ROWS = 3;
     public static final int MIN_COLUMNS = 3;
 
-    public static final int MAX_INITIAL_LIVE_CELLS = 50;
-    public static final int MIN_INITIAL_LIVE_CELLS = 10;
+    public static final int MAX_INITIAL_LIVE_CELLS = 900;
+    public static final int MIN_INITIAL_LIVE_CELLS = 5;
 
     public static final int MAX_GENERATIONS_PER_MINUTE = 450;
     public static final int MIN_GENERATIONS_PER_MINUTE = 15;
