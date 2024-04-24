@@ -120,7 +120,8 @@ public class GamePage extends Application {
 
         generationsPerMinuteTextField = StandardComponents.getOnlyNumbersTextField(
                 "Generations per minute",
-                Configurations.MIN_GENERATIONS_PER_MINUTE, Configurations.MAX_GENERATIONS_PER_MINUTE);
+                String.valueOf(Configurations.MIN_GENERATIONS_PER_MINUTE),
+                String.valueOf(Configurations.MAX_GENERATIONS_PER_MINUTE));
         Button generationsPerMinuteChangeButton = StandardComponents.getButton("APPLY");
         generationsPerMinuteChangeButton.setOnAction(this::generationsPerMinuteChangeButtonOnClick);
 
@@ -163,6 +164,7 @@ public class GamePage extends Application {
                     int value = Integer.parseInt(textField.getText());
                     value = Math.max(min, value);
                     generationsPerMinute = Math.min(max, value);
+                    textField.setText(String.valueOf(generationsPerMinute));
                 }
             }
         }

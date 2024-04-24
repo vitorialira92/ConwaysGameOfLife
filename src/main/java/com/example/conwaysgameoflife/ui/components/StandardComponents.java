@@ -27,8 +27,8 @@ public class StandardComponents {
         return button;
     }
 
-    public static VBox getOnlyNumbersTextField(String text, int min, int max){
-        VBox vbox = getTextField(text);
+    public static VBox getOnlyNumbersTextField(String text, String min, String max){
+        VBox vbox = getTextField(text + "\n(min: " + min + ", max: " + max + ")");
 
         TextField tf = (TextField)vbox.getChildren().get(1);
         tf.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -52,7 +52,7 @@ public class StandardComponents {
 
     public static VBox getTextField(String text){
         Label label = new Label(text);
-        label.setStyle("-fx-font-size: 24px; -fx-text-fill: white;");
+        label.setStyle("-fx-font-size: 16px; -fx-text-fill: white;");
 
         TextField textField = new TextField();
         textField.setStyle("-fx-text-fill: white; " +

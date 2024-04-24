@@ -44,18 +44,17 @@ public class ConfigurationPage extends Application {
         startButton.setOnAction(this::startButtonClick);
 
         rowsTextField = StandardComponents.getOnlyNumbersTextField(
-                "Rows (min: " +Configurations.MIN_ROWS + ", max: " +Configurations.MAX_ROWS + ")",
-                    Configurations.MIN_ROWS,
-                    Configurations.MAX_ROWS);
+                "Rows",
+                    String.valueOf(Configurations.MIN_ROWS),
+                    String.valueOf(Configurations.MAX_ROWS));
         columnsTextField = StandardComponents.getOnlyNumbersTextField(
-                "Columns (min: " +Configurations.MIN_COLUMNS + ", max: " +Configurations.MAX_COLUMNS + ")",
-                    Configurations.MIN_COLUMNS,
-                    Configurations.MAX_COLUMNS);
+                "Columns",
+                    String.valueOf(Configurations.MIN_COLUMNS),
+                    String.valueOf(Configurations.MAX_COLUMNS));
         livingCellsTextField = StandardComponents.getOnlyNumbersTextField(
-                "Living cells (min: " +Configurations.MIN_INITIAL_LIVE_CELLS + ", max: "
-                        + Configurations.MAX_INITIAL_LIVE_CELLS + ")",
-                        Configurations.MIN_ROWS,
-                        Configurations.MAX_INITIAL_LIVE_CELLS);
+                "Living cells\n*If you don't enter a number, it will be \nrandom",
+                    String.valueOf(Configurations.MIN_INITIAL_LIVE_CELLS),
+                    "rows * columns - 3");
         livingCellsTextField.setMaxWidth(300);
 
         HBox sizes = new HBox(64, rowsTextField, columnsTextField);
@@ -100,6 +99,10 @@ public class ConfigurationPage extends Application {
                 else{
                     int value = Integer.parseInt(textField.getText());
                     initialLiveCells = Math.max(value, Configurations.MIN_INITIAL_LIVE_CELLS);
+                    if(initialLiveCells >= (row * column) - 2){
+                        initialLiveCells = row * column - 3;
+                        textField.setText(String.valueOf(initialLiveCells));
+                    }
                 }
             }
         }
