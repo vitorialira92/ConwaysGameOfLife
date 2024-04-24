@@ -30,14 +30,13 @@ The numbers the user chooses must adhere to predefined MIN and MAX limits.
 
 For the initial live cells, if the user does not enter a number, the application will randomly select a number between the MIN and ROWS*COLUMNS.
 
-![image](https://github.com/vitorialira92/ConwaysGameOfLife/assets/48605624/1a75b6ab-a733-4ae3-9e49-b122c363a9bc)
+![image](https://github.com/vitorialira92/ConwaysGameOfLife/assets/48605624/c51a7be2-fe78-4d3c-b2f1-aaed6423c748)
 
 Once the user presses START, the initial live cells will be placed randomly on the grid. Initially, every living cell will be green, but as new generations are generated, living cells may also be represented in yellow. If a cell was alive in the previous state, its color will be yellow; if not, it will be green.
 
 Users can also choose how many generations the game should produce per minute.
 
-
-![image](https://github.com/vitorialira92/ConwaysGameOfLife/assets/48605624/20b39d2b-3172-4699-81b9-0a27c6fefd44)
+![image](https://github.com/vitorialira92/ConwaysGameOfLife/assets/48605624/e0d997e2-0bb7-4078-b284-50174f547d5b)
 
 
 ## Game Code Logic
