@@ -25,7 +25,7 @@ public class ConfigurationPage extends Application {
     private static VBox layout;
 
     @Override
-    public void start(Stage stage) throws Exception {
+    public void start(Stage stage){
         loadScreen(stage);
     }
 

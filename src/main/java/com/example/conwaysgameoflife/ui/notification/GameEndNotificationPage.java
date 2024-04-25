@@ -15,7 +15,7 @@ import javafx.stage.Window;
 public class GameEndNotificationPage extends Application {
     private VBox layout;
     @Override
-    public void start(Stage stage) throws Exception {
+    public void start(Stage stage) {
         loadScreen(stage);
     }
 
