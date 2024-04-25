@@ -38,6 +38,10 @@ Users can also choose how many generations the game should produce per minute.
 
 ![image](https://github.com/vitorialira92/ConwaysGameOfLife/assets/48605624/e0d997e2-0bb7-4078-b284-50174f547d5b)
 
+When all cells die, a popup shows up asking the user if they wish to start over or close the application.
+
+![image](https://github.com/vitorialira92/ConwaysGameOfLife/assets/48605624/ce0eeedf-aae9-43b2-a8f1-112340ce853b)
+
 
 ## Game Code Logic
 
