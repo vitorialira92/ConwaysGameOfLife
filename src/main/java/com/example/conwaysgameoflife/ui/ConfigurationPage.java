@@ -65,30 +65,26 @@ public class ConfigurationPage extends Application {
         layout.setStyle("-fx-background-color: #151515; -fx-padding: 20;");
     }
 
+    private int getTextFieldNumericInput(VBox numericTextField, int min){
+        int numericInput = 0;
+
+        for (javafx.scene.Node child : numericTextField.getChildren()) {
+            if (child instanceof TextField textField) {
+                if(textField.getText().isEmpty())
+                    numericInput = min;
+                else{
+                    int value = Integer.parseInt(textField.getText());
+                    numericInput = Math.max(value, min);
+                }
+            }
+        }
+
+        return numericInput;
+    }
     private void startButtonClick(ActionEvent actionEvent) {
-        int row = 0, column = 0, initialLiveCells = 0;
-
-        for (javafx.scene.Node child : rowsTextField.getChildren()) {
-            if (child instanceof TextField textField) {
-                if(textField.getText().isEmpty())
-                    row = Configurations.MIN_ROWS;
-                else{
-                    int value = Integer.parseInt(textField.getText());
-                    row = Math.max(value, Configurations.MIN_ROWS);
-                }
-            }
-        }
-
-        for (javafx.scene.Node child : columnsTextField.getChildren()) {
-            if (child instanceof TextField textField) {
-                if(textField.getText().isEmpty())
-                    column = Configurations.MIN_COLUMNS;
-                else{
-                    int value = Integer.parseInt(textField.getText());
-                    column = Math.max(value, Configurations.MIN_COLUMNS);
-                }
-            }
-        }
+        int row = getTextFieldNumericInput(rowsTextField, Configurations.MIN_ROWS);
+        int column = getTextFieldNumericInput(columnsTextField, Configurations.MIN_COLUMNS);
+        int initialLiveCells = 0;
 
         boolean getRandomLivingCells = false;
 
