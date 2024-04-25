@@ -13,6 +13,7 @@ import javafx.stage.Stage;
 import javafx.stage.Window;
 
 public class GameEndNotificationPage extends Application {
+    private VBox layout;
     @Override
     public void start(Stage stage) throws Exception {
         loadScreen(stage);
@@ -24,6 +25,7 @@ public class GameEndNotificationPage extends Application {
         startOverButton.setOnAction(e -> {
             closeAllWindows();
             openConfigurationsPage();
+            ((Stage) layout.getScene().getWindow()).close();
         });
 
         Button closeButton = StandardComponents.getButton("CLOSE");
@@ -31,7 +33,7 @@ public class GameEndNotificationPage extends Application {
             Platform.exit();
         });
 
-        VBox layout = new VBox(40, label, startOverButton, closeButton);
+        layout = new VBox(40, label, startOverButton, closeButton);
         layout.setAlignment(Pos.CENTER);
         layout.setStyle("-fx-background-color: #151515; -fx-padding: 20;");
 
