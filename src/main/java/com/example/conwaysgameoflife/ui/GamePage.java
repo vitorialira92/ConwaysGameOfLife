@@ -3,6 +3,7 @@ package com.example.conwaysgameoflife.ui;
 import com.example.conwaysgameoflife.configuration.Configurations;
 import com.example.conwaysgameoflife.services.GameOfLifeService;
 import com.example.conwaysgameoflife.ui.components.StandardComponents;
+import com.example.conwaysgameoflife.ui.notification.GameEndNotificationPage;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
@@ -213,6 +214,18 @@ public class GamePage extends Application {
                     generationsCounter.setText(" | " + generations + " generations");
                     liveAndDeadCounter.setText(totalCells + " total cells\n" +
                             "----> " + liveCells + " live | " + (totalCells - liveCells) + " dead");
+
+                    if(this.liveCells == 0){
+                        stopTimelines();
+
+                        GameEndNotificationPage gameEndPage = new GameEndNotificationPage();
+                        Stage stage = new Stage();
+                        try {
+                            gameEndPage.start(stage);
+                        } catch (Exception exception) {
+                            exception.printStackTrace();
+                        }
+                    }
                 });
 
         generationsAndLiveAndDeadTimeline = new Timeline(generationsAndLiveAndDeadKeyFrame);
