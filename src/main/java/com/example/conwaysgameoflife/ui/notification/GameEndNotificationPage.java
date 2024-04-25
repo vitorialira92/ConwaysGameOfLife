@@ -40,12 +40,14 @@ public class GameEndNotificationPage extends Application {
         stage.setScene(scene);
         stage.show();
     }
+
     private void closeAllWindows(){
         for (Window window : Stage.getWindows()) {
             if(window instanceof Stage)
                 ((Stage) window).close();
         }
     }
+
     private void openConfigurationsPage(){
         ConfigurationPage configurationPage = new ConfigurationPage();
         Stage stage = new Stage();
